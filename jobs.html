@@ -1,0 +1,11 @@
+{{ template "header.html" . }}
+
+<h2>Jobs</h2>
+
+<ul>
+  {{ range . }}
+  <li><a href="/job/{{.Id}}">{{.Id}}</a>, status: {{.Status}}</li>
+  {{ end }}
+</ul>
+
+{{ template "footer.html" . }}

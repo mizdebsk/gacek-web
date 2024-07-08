@@ -1,0 +1,173 @@
+{{ template "header.html" . }}
+
+<!-- Emoji:
+Pending <span style="font-size:10rem">🔧</span>
+Pass <span style="font-size:10rem">✅</span>
+Fail <span style="font-size:10rem">⛔</span>
+  -->
+
+<h2>{{.Job.Id}}</h2>
+
+<p>Status: {{.Job.Status}}</p>
+
+{{ with .Dispatch }}
+<p>Testing Farm request: <a href="https://artifacts.dev.testing-farm.io/{{.TfId}}/">{{.TfId}}</a></p>
+{{ else }}
+<p>There is no dispatch info for this job.</p>
+{{ end }}
+
+{{ with .Results }}
+
+<div class="container-fluid">
+
+  {{ range .Plans }}
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>
+	{{ if eq .Result "passed" }}
+	✅
+	{{ else }}
+	⛔
+	{{ end }}
+	{{.Name}}
+      </h3>
+
+      Plan name: {{.Name}}<br/>
+      Plan overall result: {{.Result}}<br/>
+
+      Logs:
+      <ul>
+	{{ range .Logs }}
+	<li><a href="{{.Url}}">{{.Name}}</a></li>
+	{{ end }}
+      </ul>
+    </div>
+  </div>
+
+  {{ range .Tests }}
+
+  <div class="row">
+    <div class="col-sm-12">
+      <button  class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{.IntId}}"	   >
+	<h4>
+	  {{ if eq .Result "passed" }}
+	  ✅
+	  {{ else if eq .Result "info" }}
+	  ℹ️
+	  {{ else if eq .Result "not_applicable" }}
+	  ❎
+	  {{ else }}
+	  ⛔
+	  {{ end }}
+	  {{.Name}}
+	</h4>
+      </button>
+
+      <div class="collapse
+{{ if eq .Result "passed" }}
+{{ else }}
+show
+{{ end }}	      " id="collapse{{.IntId}}">
+	<div class="container-fluid">
+	  <div class="row">
+            <div class="col-sm-4">
+	      <div class="card">
+		<div class="card-body">
+		  <h5 class="card-title">Test result</h5>
+		  <p class="card-text">
+		    Test name: {{.Name}}<br/>
+		    Test result: {{.Result}}
+		  </p>
+
+		  {{ with .Link }}
+		  <a class="card-link" href="{{.}}">Test sources</a>
+		  {{ end }}
+		  {{ range .Logs }}
+		  <a class="card-link" href="{{.Url}}">{{.Name}}</a>
+		  {{ end }}
+		</div>
+	      </div>
+	    </div>
+
+	    {{ with .Info }}
+
+	    <div class="col-sm-8">
+	      <div class="card">
+		<div class="card-body">
+		  <h5 class="card-title">Test metadata</h5>
+
+		  <p class="card-text">
+		    Summary: {{.Summary}}<br/>
+		    Description: {{.Description}}<br/>
+		    Duration: {{.Duration}}<br/>
+		    Tier: {{.Tier}}<br/>
+
+		    Contacts:
+		    <ul>
+		      {{ range .Contacts }}
+		      <li>{{.}}</li>
+		      {{ end }}
+		    </ul>
+
+		    {{ with .Tags }}
+		    Tags:
+		    {{ range . }}
+		    <code>{{.}}</code>
+		    {{ end }}
+		    {{ else }}
+		    No tags
+		    {{ end }}
+		    <br/>
+		  </p>
+		</div>
+	      </div>
+	    </div>
+	    {{ end }}
+
+	  </div>
+	  {{ with .Journal }}
+	  <div class="row pt-4">
+	    <div class="col-sm-12">
+	      <div class="card">
+		<div class="card-body">
+		  <h5 class="card-title">Test journal</h5>
+		  <div class="embed-responsive embed-responsive-4by3">
+		    <iframe class="embed-responsive-item w-100" style="height:32rem" src="{{.Url}}"></iframe>
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  {{ end }}
+	  {{ with .Testout }}
+	  <div class="row pt-4">
+	    <div class="col-sm-12">
+	      <div class="card">
+		<div class="card-body">
+		  <h5 class="card-title">Test output</h5>
+		  <div class="embed-responsive embed-responsive-4by3">
+		    <iframe class="embed-responsive-item w-100" style="height:32rem" src="{{.Url}}"></iframe>
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  {{ end }}
+
+	</div>
+      </div>
+    </div>
+
+    {{ end }}
+
+    {{ end }}
+
+  </div>
+</div>
+
+{{ else }}
+<p>There are no results for this job.</p>
+{{ end }}
+
+{{ template "footer.html" . }}
