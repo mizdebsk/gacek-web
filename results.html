@@ -29,17 +29,17 @@ Fail <span style="font-size:10rem">⛔</span>
 
   <div class="row">
     <div class="col-sm-12">
-      <h3>{{$plan_emoji}}{{.Name}}</h3>
-
-      Plan name: {{.Name}}<br/>
-      Plan overall result: {{.Result}}<br/>
-
-      Logs:
-      <ul>
-	{{ range .Logs }}
-	<li><a href="{{.Url}}">{{.Name}}</a></li>
-	{{ end }}
-      </ul>
+      <div class="card">
+	<div class="card-body">
+	  <h3 class="card-title">{{$plan_emoji}}{{.Name}}</h3>
+	  <p class="card-text">
+	    Plan overall result: {{.Result}}<br/>
+	  </p>
+	  {{ range .Logs }}
+	  <a class="card-link" href="{{.Url}}">{{.Name}}</a>
+	  {{ end }}
+	</div>
+      </div>
     </div>
   </div>
 
