@@ -1,6 +1,6 @@
 {{ template "header.html" . }}
 
-<h2>{{emoji .Job}}{{.Job.Id}}</h2>
+<h2>{{.Job.Emoji}}{{.Job.Id}}</h2>
 
 <p>Status: {{.Job.Status}}</p>
 
@@ -22,7 +22,7 @@
     <div class="col-sm-12">
       <div class="card">
 	<div class="card-body">
-	  <h3 class="card-title">{{emoji .Result}}{{.Name}}</h3>
+	  <h3 class="card-title">{{.Result.Emoji}}{{.Name}}</h3>
 	  <p class="card-text">
 	    Plan overall result: {{.Result}}<br/>
 	  </p>
@@ -39,10 +39,10 @@
   <div class="row pt-2">
     <div class="col-sm-12">
       <button  class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{.IntId}}"	   >
-	<h5>{{emoji .Result}}{{.Name}}</h5>
+	<h5>{{.Result.Emoji}}{{.Name}}</h5>
       </button>
 
-      <div class="collapse{{if is_bad .Result}} show{{end}}" id="collapse{{.IntId}}">
+      <div class="collapse{{if .Result.IsBad}} show{{end}}" id="collapse{{.IntId}}">
 	<div class="container-fluid">
 	  <div class="row pt-2">
             <div class="col-sm-4">

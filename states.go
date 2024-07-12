@@ -29,7 +29,7 @@ func (s TestStatus) String() string {
 	}
 }
 
-func is_bad(status TestStatus) bool {
+func (status TestStatus) IsBad() bool {
 	switch status {
 	case TMT_PASS, TMT_INFO, TMT_SKIP:
 		return false
@@ -38,7 +38,7 @@ func is_bad(status TestStatus) bool {
 	}
 }
 
-func emoji(status TestStatus) string {
+func (status TestStatus) Emoji() string {
 	switch status {
 	case TMT_PASS:
 		return "✅"
@@ -55,9 +55,9 @@ func emoji(status TestStatus) string {
 	}
 }
 
-func emoji(job Job) string {
+func (job Job) Emoji() string {
 	if job.Results != nil {
-		return emoji(job.Results.Overall)
+		return job.Results.Overall.Emoji()
 	}
 	return "🔧"
 }
