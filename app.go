@@ -34,7 +34,7 @@ func job_handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if job.Status == "complete" {
-		results := get_results(job.Id)
+		results := get_full_results(job.Id)
 		data.Results = &results
 	}
 

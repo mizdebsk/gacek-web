@@ -29,6 +29,10 @@ func read_jobs() []Job {
 		}
 		for _, entry := range entries {
 			job := Job{Id: entry, Status: queue}
+			if job.Status == "complete" {
+				results := get_results(job.Id)
+				job.Results = &results
+			}
 			jobs = append(jobs, job)
 		}
 	}
@@ -79,11 +83,32 @@ func get_results(job_id string) Results {
 	iid := 0
 	for pi, tfPlan := range results.Plans {
 		results.Plans[pi].Result = parse_tf_result(tfPlan.ResultStr)
-		tmtTests := get_tests(job_id, strings.TrimPrefix(tfPlan.Name, "/"))
 		for ti, tfTest := range tfPlan.Tests {
 			results.Plans[pi].Tests[ti].Result = parse_tf_result(tfTest.ResultStr)
 			results.Plans[pi].Tests[ti].IntId = iid
 			iid++
+			for li, log := range tfTest.Logs {
+				if log.Name == "journal.txt" {
+					results.Plans[pi].Tests[ti].Journal = &results.Plans[pi].Tests[ti].Logs[li]
+				}
+				if log.Name == "testout.log" {
+					results.Plans[pi].Tests[ti].Testout = &results.Plans[pi].Tests[ti].Logs[li]
+				}
+			}
+
+			results.Plans[pi].Tests[ti].Link = test_source_url(tfTest.Name)
+		}
+	}
+
+	return results
+}
+
+func get_full_results(job_id string) Results {
+	results := get_results(job_id)
+
+	for pi, tfPlan := range results.Plans {
+		tmtTests := get_tests(job_id, strings.TrimPrefix(tfPlan.Name, "/"))
+		for ti, tfTest := range tfPlan.Tests {
 			for tti, tmtTest := range tmtTests {
 				if tmtTest.Name == tfTest.Name {
 					results.Plans[pi].Tests[ti].Info = &tmtTests[tti]
@@ -96,16 +121,6 @@ func get_results(job_id string) Results {
 					}
 				}
 			}
-			for li, log := range tfTest.Logs {
-				if log.Name == "journal.txt" {
-					results.Plans[pi].Tests[ti].Journal = &results.Plans[pi].Tests[ti].Logs[li]
-				}
-				if log.Name == "testout.log" {
-					results.Plans[pi].Tests[ti].Testout = &results.Plans[pi].Tests[ti].Logs[li]
-				}
-			}
-
-			results.Plans[pi].Tests[ti].Link = test_source_url(tfTest.Name)
 		}
 	}
 
