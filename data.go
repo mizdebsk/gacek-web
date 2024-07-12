@@ -75,10 +75,13 @@ func get_results(job_id string) Results {
 		log.Fatal(err)
 	}
 
+	results.Overall = parse_tf_result(results.OverallStr)
 	iid := 0
 	for pi, tfPlan := range results.Plans {
+		results.Plans[pi].Result = parse_tf_result(tfPlan.ResultStr)
 		tmtTests := get_tests(job_id, strings.TrimPrefix(tfPlan.Name, "/"))
 		for ti, tfTest := range tfPlan.Tests {
+			results.Plans[pi].Tests[ti].Result = parse_tf_result(tfTest.ResultStr)
 			results.Plans[pi].Tests[ti].IntId = iid
 			iid++
 			for tti, tmtTest := range tmtTests {

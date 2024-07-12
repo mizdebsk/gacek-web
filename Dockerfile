@@ -1,7 +1,7 @@
 FROM golang:1.22 as build
 ENV CGO_ENABLED=0
 COPY go.mod go.sum *.go *.html /
-RUN ["go","build","-o","/app","/app.go","/data.go","/model.go"]
+RUN ["go","build","-o","/app","/app.go","/data.go","/model.go","/states.go"]
 
 FROM gcr.io/distroless/static
 COPY --from=build /app /*.html /

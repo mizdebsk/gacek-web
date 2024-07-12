@@ -22,30 +22,33 @@ type TmtTest struct {
 }
 
 type Results struct {
-	XMLName xml.Name `xml:"testsuites"`
-	Overall string   `xml:"overall-result,attr"`
-	Plans   []Plan   `xml:"testsuite"`
+	XMLName    xml.Name   `xml:"testsuites"`
+	OverallStr string     `xml:"overall-result,attr"`
+	Overall    TestStatus `xml:"-"`
+	Plans      []Plan     `xml:"testsuite"`
 }
 
 type Plan struct {
-	XMLName xml.Name `xml:"testsuite"`
-	Name    string   `xml:"name,attr"`
-	Result  string   `xml:"result,attr"`
-	Tests   []Test   `xml:"testcase"`
-	Logs    []Log    `xml:"logs>log"`
+	XMLName   xml.Name   `xml:"testsuite"`
+	Name      string     `xml:"name,attr"`
+	ResultStr string     `xml:"result,attr"`
+	Result    TestStatus `xml:"-"`
+	Tests     []Test     `xml:"testcase"`
+	Logs      []Log      `xml:"logs>log"`
 }
 
 type Test struct {
-	XMLName xml.Name `xml:"testcase"`
-	IntId   int      `xml:"-"`
-	Name    string   `xml:"name,attr"`
-	Result  string   `xml:"result,attr"`
-	Time    string   `xml:"time,attr"`
-	Logs    []Log    `xml:"logs>log"`
-	Journal *Log     `xml:"-"`
-	Testout *Log     `xml:"-"`
-	Info    *TmtTest `xml:"-"`
-	Link    string   `xml:"-"`
+	XMLName   xml.Name   `xml:"testcase"`
+	IntId     int        `xml:"-"`
+	Name      string     `xml:"name,attr"`
+	ResultStr string     `xml:"result,attr"`
+	Result    TestStatus `xml:"-"`
+	Time      string     `xml:"time,attr"`
+	Logs      []Log      `xml:"logs>log"`
+	Journal   *Log       `xml:"-"`
+	Testout   *Log       `xml:"-"`
+	Info      *TmtTest   `xml:"-"`
+	Link      string     `xml:"-"`
 }
 
 type Log struct {
@@ -58,3 +61,5 @@ type JobDispatch struct {
 	XMLName xml.Name `xml:"dispatch"`
 	TfId    string   `xml:"tfId"`
 }
+
+type TestStatus int

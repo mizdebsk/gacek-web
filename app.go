@@ -7,7 +7,12 @@ import (
 	"strings"
 )
 
-var Template = template.Must(template.ParseGlob("*.html"))
+var funcMap = template.FuncMap{
+	"emoji":  emoji,
+	"is_bad": is_bad,
+}
+
+var Template = template.Must(template.New("").Funcs(funcMap).ParseGlob("*.html"))
 
 func job_handler(w http.ResponseWriter, r *http.Request) {
 	id := strings.TrimPrefix(r.URL.Path, "/job/")

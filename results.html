@@ -18,22 +18,17 @@ Fail <span style="font-size:10rem">⛔</span>
 
 {{ with .Results }}
 
-<p>Overall result: {{.Overall}}</p>
+<p>Overall result: {{.Overall}}{{emoji .Overall}}</p>
 
 <div class="container-fluid">
 
   {{ range .Plans }}
 
-  {{ $plan_emoji := "⛔" }}
-  {{ if eq .Result "passed" }}
-  {{ $plan_emoji = "✅" }}
-  {{ end }}
-
   <div class="row">
     <div class="col-sm-12">
       <div class="card">
 	<div class="card-body">
-	  <h3 class="card-title">{{$plan_emoji}}{{.Name}}</h3>
+	  <h3 class="card-title">{{emoji .Result}}{{.Name}}</h3>
 	  <p class="card-text">
 	    Plan overall result: {{.Result}}<br/>
 	  </p>
@@ -47,25 +42,13 @@ Fail <span style="font-size:10rem">⛔</span>
 
   {{ range .Tests }}
 
-  {{ $show := "" }}
-  {{ $test_emoji := "⛔" }}
-  {{ if eq .Result "passed" }}
-  {{ $test_emoji = "✅" }}
-  {{ else if eq .Result "info" }}
-  {{ $test_emoji = "ℹ️" }}
-  {{ else if eq .Result "not_applicable" }}
-  {{ $test_emoji = "❎" }}
-  {{ else }}
-  {{ $show = "show" }}
-  {{ end }}
-
   <div class="row pt-2">
     <div class="col-sm-12">
       <button  class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{.IntId}}"	   >
-	<h5>{{$test_emoji}}{{.Name}}</h5>
+	<h5>{{emoji .Result}}{{.Name}}</h5>
       </button>
 
-      <div class="collapse {{$show}}" id="collapse{{.IntId}}">
+      <div class="collapse{{if is_bad .Result}} show{{end}}" id="collapse{{.IntId}}">
 	<div class="container-fluid">
 	  <div class="row pt-2">
             <div class="col-sm-4">
