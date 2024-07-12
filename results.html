@@ -57,7 +57,7 @@ Fail <span style="font-size:10rem">⛔</span>
   {{ $show = "show" }}
   {{ end }}
 
-  <div class="row">
+  <div class="row pt-2">
     <div class="col-sm-12">
       <button  class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{.IntId}}"	   >
 	<h5>{{$test_emoji}}{{.Name}}</h5>
@@ -65,7 +65,7 @@ Fail <span style="font-size:10rem">⛔</span>
 
       <div class="collapse {{$show}}" id="collapse{{.IntId}}">
 	<div class="container-fluid">
-	  <div class="row">
+	  <div class="row pt-2">
             <div class="col-sm-4">
 	      <div class="card">
 		<div class="card-body">
@@ -155,6 +155,7 @@ Fail <span style="font-size:10rem">⛔</span>
       {{ end }}
     </div>
   </div>
+  <div class="row mb-5"></div>
   {{ end }}
 </div>
 
