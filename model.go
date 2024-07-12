@@ -7,7 +7,6 @@ import (
 type Job struct {
 	Id      string
 	Status  string
-	TfId    *string
 	Results *Results
 }
 
