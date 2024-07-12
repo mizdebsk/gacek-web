@@ -5,11 +5,7 @@
 <ul>
   {{ range . }}
   <li>
-    {{ with .Results }}
-    {{emoji .Overall}}
-    {{ else }}
-    🔧
-    {{ end }}
+    {{emoji .}}
     <a href="/job/{{.Id}}">{{.Id}}</a>, job status: {{.Status}},
     {{ with .Results }}
     overall result: {{.Overall}}

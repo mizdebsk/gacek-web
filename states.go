@@ -55,6 +55,13 @@ func emoji(status TestStatus) string {
 	}
 }
 
+func emoji(job Job) string {
+	if job.Results != nil {
+		return emoji(job.Results.Overall)
+	}
+	return "🔧"
+}
+
 // TF test results: passed info needs_inspection failed not_applicable error
 // Ref: gluetool-modules.git gluetool_modules_framework/testing/test_schedule_tmt.py
 // Ref: https://pagure.io/fedora-ci/messages/blob/master/f/schemas/test-complete.yaml

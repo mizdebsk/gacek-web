@@ -1,6 +1,6 @@
 {{ template "header.html" . }}
 
-<h2>{{.Job.Id}}</h2>
+<h2>{{emoji .Job}}{{.Job.Id}}</h2>
 
 <p>Status: {{.Job.Status}}</p>
 
@@ -12,7 +12,7 @@
 
 {{ with .Results }}
 
-<p>Overall result: {{.Overall}}{{emoji .Overall}}</p>
+<p>Overall result: {{.Overall}}</p>
 
 <div class="container-fluid">
 
