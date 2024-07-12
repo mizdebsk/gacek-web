@@ -60,7 +60,7 @@ Fail <span style="font-size:10rem">⛔</span>
   <div class="row">
     <div class="col-sm-12">
       <button  class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{.IntId}}"	   >
-	<h4>{{$test_emoji}}{{.Name}}</h4>
+	<h5>{{$test_emoji}}{{.Name}}</h5>
       </button>
 
       <div class="collapse {{$show}}" id="collapse{{.IntId}}">
@@ -69,7 +69,7 @@ Fail <span style="font-size:10rem">⛔</span>
             <div class="col-sm-4">
 	      <div class="card">
 		<div class="card-body">
-		  <h5 class="card-title">Test result</h5>
+		  <h6 class="card-title">Test result</h6>
 		  <p class="card-text">
 		    Test name: {{.Name}}<br/>
 		    Test result: {{.Result}}
@@ -90,7 +90,7 @@ Fail <span style="font-size:10rem">⛔</span>
 	    <div class="col-sm-8">
 	      <div class="card">
 		<div class="card-body">
-		  <h5 class="card-title">Test metadata</h5>
+		  <h6 class="card-title">Test metadata</h6>
 
 		  <p class="card-text">
 		    Summary: {{.Summary}}<br/>
@@ -126,7 +126,7 @@ Fail <span style="font-size:10rem">⛔</span>
 	    <div class="col-sm-12">
 	      <div class="card">
 		<div class="card-body">
-		  <h5 class="card-title">Test journal</h5>
+		  <h6 class="card-title">Test journal</h6>
 		  <div class="embed-responsive embed-responsive-4by3">
 		    <iframe class="embed-responsive-item w-100" style="height:32rem" src="{{.Url}}"></iframe>
 		  </div>
@@ -140,7 +140,7 @@ Fail <span style="font-size:10rem">⛔</span>
 	    <div class="col-sm-12">
 	      <div class="card">
 		<div class="card-body">
-		  <h5 class="card-title">Test output</h5>
+		  <h6 class="card-title">Test output</h6>
 		  <div class="embed-responsive embed-responsive-4by3">
 		    <iframe class="embed-responsive-item w-100" style="height:32rem" src="{{.Url}}"></iframe>
 		  </div>
