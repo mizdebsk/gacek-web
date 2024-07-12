@@ -23,6 +23,7 @@ type TmtTest struct {
 
 type Results struct {
 	XMLName xml.Name `xml:"testsuites"`
+	Overall string   `xml:"overall-result,attr"`
 	Plans   []Plan   `xml:"testsuite"`
 }
 
