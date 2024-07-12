@@ -3,6 +3,7 @@
 <h2>{{.Job.Emoji}}{{.Job.Id}}</h2>
 
 <p>Status: {{.Job.Status}}</p>
+<p><a href="/artifacts/{{.Job.Id}}">Job Artifacts</a></p>
 
 {{ with .Dispatch }}
 <p>Testing Farm request: <a href="https://artifacts.dev.testing-farm.io/{{.TfId}}/">{{.TfId}}</a></p>

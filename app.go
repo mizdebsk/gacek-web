@@ -49,9 +49,31 @@ func jobs_handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func artifacts_handler(w http.ResponseWriter, r *http.Request) {
+	id := strings.TrimPrefix(r.URL.Path, "/artifacts/")
+	job := get_job(id)
+	if job == nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	artifacts := get_artifacts(job.Id)
+
+	data := struct {
+		Job       *Job
+		Artifacts []Artifact
+	}{Job: job, Artifacts: artifacts}
+
+	w.Header().Add("Content-Type", "text/html; charset=UTF-8")
+	err := Template.ExecuteTemplate(w, "artifacts.html", data)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
 func main() {
 	http.HandleFunc("/jobs/", jobs_handler)
 	http.HandleFunc("/job/", job_handler)
+	http.HandleFunc("/artifacts/", artifacts_handler)
 	http.Handle("/", http.RedirectHandler("/jobs/", http.StatusFound))
 	http.ListenAndServe(":8080", nil)
 }

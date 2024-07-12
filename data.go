@@ -152,3 +152,18 @@ func get_dispatch(job_id string) JobDispatch {
 
 	return dispatch
 }
+
+func get_artifacts(job_id string) []Artifact {
+	bytes, err := os.ReadFile(jobs_dir + "/" + job_id + "/" + "artifacts.xml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	artifacts := struct {
+		Artifacts []Artifact `xml:"artifact"`
+	}{}
+	if err := xml.Unmarshal(bytes, &artifacts); err != nil {
+		log.Fatal(err)
+	}
+
+	return artifacts.Artifacts
+}

@@ -62,3 +62,10 @@ type JobDispatch struct {
 }
 
 type TestStatus int
+
+type Artifact struct {
+	Name    string `xml:"name"`
+	NVR     string `xml:"nvr"`
+	BuildId string `xml:"buildId"`
+	TaskId  string `xml:"taskId"`
+}

@@ -1,0 +1,13 @@
+{{ template "header.html" . }}
+
+<h2>Artifacts of {{.Job.Id}}</h2>
+
+<p>See also <a href="/job/{{.Job.Id}}">job details</a>.</p>
+
+<ul>
+  {{ range .Artifacts }}
+  <li><a href="https://koji.fedoraproject.org/koji/buildinfo?buildID={{.BuildId}}">{{.NVR}}</a></li>
+  {{ end }}
+</ul>
+
+{{ template "footer.html" . }}
