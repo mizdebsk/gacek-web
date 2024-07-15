@@ -61,25 +61,30 @@ func get_job(id string) *Job {
 	return nil
 }
 
-// Get test sources URL
-func test_source_url(id string) string {
-	chunks := strings.Split(strings.TrimPrefix(id, "/"), "/")
-	var repo string
-	var path string
+func parse_test_name(test *Test) {
+	chunks := strings.Split(strings.TrimPrefix(test.Name, "/"), "/")
 	if chunks[0] == "tests" {
-		// Tests in a dedicated "tests" repo
-		repo = strings.Join(chunks[0:2], "/")
-		path = strings.Join(chunks[2:], "/")
+		test.Component = chunks[1]
+		test.Path = strings.Join(chunks[2:], "/")
+		test.Link = fmt.Sprintf("https://src.fedoraproject.org/tests/%s/blob/main/f/%s",
+			test.Component, test.Path)
 	} else if chunks[1] == "tests" {
-		// Tests in "rpms" dist-git repo
-		repo = "rpms/" + chunks[0]
-		path = strings.Join(chunks[1:], "/")
+		test.Component = chunks[0]
+		test.Path = strings.Join(chunks[2:], "/")
+		test.Link = fmt.Sprintf("https://src.fedoraproject.org/rpms/%s/blob/main/f/tests/%s",
+			test.Component, test.Path)
+	} else if chunks[0] == "javapackages-validator" {
+		test.Component = chunks[0]
+		test.Path = strings.Join(chunks[1:], "/")
+		if chunks[1] == "jp" {
+			test.Link = "https://src.fedoraproject.org/tests/javapackages/tree/main"
+		} else {
+			test.Link = "https://github.com/fedora-java/javapackages-validator"
+		}
 	} else {
-		// Unknown
-		return ""
+		log.Printf("Unable to parse test name: %s\n", test.Name)
+		return
 	}
-	url := fmt.Sprintf("https://src.fedoraproject.org/%s/blob/main/f/%s", repo, path)
-	return url
 }
 
 func get_results(job_id string) Results {
@@ -109,7 +114,7 @@ func get_results(job_id string) Results {
 				}
 			}
 
-			results.Plans[pi].Tests[ti].Link = test_source_url(tfTest.Name)
+			parse_test_name(&results.Plans[pi].Tests[ti])
 		}
 		slices.SortStableFunc(results.Plans[pi].Tests, func(ta, tb Test) int {
 			ap := strings.HasPrefix(ta.Name, "/tests/")

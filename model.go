@@ -47,6 +47,8 @@ type Test struct {
 	Journal   *Log       `xml:"-"`
 	Testout   *Log       `xml:"-"`
 	Info      *TmtTest   `xml:"-"`
+	Component string     `xml:"-"`
+	Path      string     `xml:"-"`
 	Link      string     `xml:"-"`
 }
 
