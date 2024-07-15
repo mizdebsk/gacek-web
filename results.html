@@ -40,7 +40,7 @@
   <div class="row pt-2">
     <div class="col-sm-12">
       <button  class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{.IntId}}"	   >
-	<h5>{{.Result.Emoji}}{{.Name}}</h5>
+	<h5>{{.Result.Emoji}}{{.Component}} &ndash; {{.Path}}</h5>
       </button>
 
       <div class="collapse{{if .Result.IsBad}} show{{end}}" id="collapse{{.IntId}}">
