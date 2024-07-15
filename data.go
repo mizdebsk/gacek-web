@@ -113,6 +113,9 @@ func get_results(job_id string) Results {
 		}
 	}
 
+	slices.SortStableFunc(results.Plans, func(pa, pb Plan) int {
+		return strings.Compare(pa.Name, pb.Name)
+	})
 	return results
 }
 
