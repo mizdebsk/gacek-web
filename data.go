@@ -111,6 +111,17 @@ func get_results(job_id string) Results {
 
 			results.Plans[pi].Tests[ti].Link = test_source_url(tfTest.Name)
 		}
+		slices.SortStableFunc(results.Plans[pi].Tests, func(ta, tb Test) int {
+			ap := strings.HasPrefix(ta.Name, "/tests/")
+			bp := strings.HasPrefix(tb.Name, "/tests/")
+			if ap == bp {
+				return strings.Compare(ta.Name, tb.Name)
+			}
+			if ap {
+				return -1
+			}
+			return +1
+		})
 	}
 
 	slices.SortStableFunc(results.Plans, func(pa, pb Plan) int {
