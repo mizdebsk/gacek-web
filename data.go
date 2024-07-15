@@ -117,15 +117,10 @@ func get_results(job_id string) Results {
 			parse_test_name(&results.Plans[pi].Tests[ti])
 		}
 		slices.SortStableFunc(results.Plans[pi].Tests, func(ta, tb Test) int {
-			ap := strings.HasPrefix(ta.Name, "/tests/")
-			bp := strings.HasPrefix(tb.Name, "/tests/")
-			if ap == bp {
-				return strings.Compare(ta.Name, tb.Name)
+			if ta.Component != tb.Component {
+				return strings.Compare(ta.Component, tb.Component)
 			}
-			if ap {
-				return -1
-			}
-			return +1
+			return strings.Compare(ta.Path, tb.Path)
 		})
 	}
 
