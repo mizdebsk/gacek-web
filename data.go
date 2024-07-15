@@ -7,6 +7,7 @@ import (
 	"gopkg.in/yaml.v3"
 	"log"
 	"os"
+	"slices"
 	"strings"
 )
 
@@ -36,6 +37,18 @@ func read_jobs() []Job {
 			jobs = append(jobs, job)
 		}
 	}
+
+	slices.SortStableFunc(jobs, func(ja, jb Job) int {
+		aa := strings.Split(ja.Id, ".")
+		bb := strings.Split(jb.Id, ".")
+		at := strings.Join(aa[1:], ".")
+		bt := strings.Join(bb[1:], ".")
+		r := -strings.Compare(at, bt)
+		if r != 0 {
+			return r
+		}
+		return strings.Compare(aa[0], bb[0])
+	})
 	return jobs
 }
 
