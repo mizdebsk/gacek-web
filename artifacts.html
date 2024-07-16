@@ -6,7 +6,13 @@
 
 <ul>
   {{ range .Artifacts }}
-  <li><a href="https://koji.fedoraproject.org/koji/buildinfo?buildID={{.BuildId}}">{{.NVR}}</a></li>
+  <li>
+    {{ if .BuildId }}
+    <a href="https://koji.fedoraproject.org/koji/buildinfo?buildID={{.BuildId}}">{{.NVR}}</a>
+    {{ else }}
+    <a href="https://koji.fedoraproject.org/koji/taskinfo?taskID={{.TaskId}}">{{.NVR}}</a> (SCRATCH)
+    {{ end }}
+  </li>
   {{ end }}
 </ul>
 
