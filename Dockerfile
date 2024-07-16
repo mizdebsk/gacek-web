@@ -6,4 +6,5 @@ RUN ["go","build","-o","/app","/app.go","/data.go","/model.go","/states.go"]
 FROM gcr.io/distroless/static:nonroot
 COPY --from=build /app /*.html /
 EXPOSE 8080
+WORKDIR /
 CMD ["/app"]
