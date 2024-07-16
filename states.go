@@ -59,7 +59,10 @@ func (job Job) Emoji() string {
 	if job.Results != nil {
 		return job.Results.Overall.Emoji()
 	}
-	return "🔧"
+	if job.Status == "new" || job.Status == "pending" {
+		return "🔧"
+	}
+	return "❌"
 }
 
 // TF test results: passed info needs_inspection failed not_applicable error
