@@ -23,7 +23,7 @@ func job_handler(w http.ResponseWriter, r *http.Request) {
 		Results  *Results
 	}{Job: job}
 
-	if job.Status == "pending" || job.Status == "complete" {
+	if job.Status == "pending" || job.Status == "complete" || job.Status == "error" {
 		dispatch := get_dispatch(job.Id)
 		data.Dispatch = &dispatch
 	}
