@@ -81,6 +81,10 @@ func parse_test_name(test *Test) {
 		} else {
 			test.Link = "https://github.com/fedora-java/javapackages-validator"
 		}
+	} else if chunks[0] == "runit" {
+		test.Component = chunks[0]
+		test.Path = strings.Join(chunks[1:], "/")
+		test.Link = "https://src.fedoraproject.org/tests/javapackages/blob/main/f/runit"
 	} else {
 		log.Printf("Unable to parse test name: %s\n", test.Name)
 		return
