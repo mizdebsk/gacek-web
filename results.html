@@ -6,7 +6,10 @@
 <p><a href="/artifacts/{{.Job.Id}}">Job Artifacts</a></p>
 
 {{ with .Dispatch }}
-<p>Testing Farm request: <a href="https://artifacts.dev.testing-farm.io/{{.TfId}}/">{{.TfId}}</a></p>
+<p>Testing Farm request:
+  <a href="https://artifacts.dev.testing-farm.io/{{.TfId}}/">{{.TfId}}</a>
+  (or <a href="https://api.testing-farm.io/v0.1/requests/{{.TfId}}/">raw API Request</a> in JSON format).
+</p>
 {{ else }}
 <p>There is no dispatch info for this job.</p>
 {{ end }}
