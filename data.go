@@ -63,7 +63,11 @@ func get_job(id string) *Job {
 
 func parse_test_name(test *Test) {
 	chunks := strings.Split(strings.TrimPrefix(test.Name, "/"), "/")
-	if chunks[0] == "tests" {
+	if chunks[0] == "mbici" {
+		test.Component = chunks[1]
+		test.Path = strings.Join(chunks[2:], "/")
+		test.Link = ""
+	} else if chunks[0] == "tests" {
 		test.Component = chunks[1]
 		test.Path = strings.Join(chunks[2:], "/")
 		test.Link = fmt.Sprintf("https://src.fedoraproject.org/tests/%s/blob/main/f/%s",
