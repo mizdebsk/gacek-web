@@ -63,6 +63,13 @@ func get_job(id string) *Job {
 
 func parse_test_name(test *Test) {
 	chunks := strings.Split(strings.TrimPrefix(test.Name, "/"), "/")
+	if len(chunks) < 2 {
+		test.Component = ""
+		test.Path = strings.Join(chunks, "/")
+		test.Link = ""
+		log.Printf("Unable to parse test name: %s\n", test.Name)
+		return
+	}
 	if chunks[0] == "mbici" {
 		test.Component = chunks[1]
 		test.Path = strings.Join(chunks[2:], "/")
@@ -90,8 +97,10 @@ func parse_test_name(test *Test) {
 		test.Path = strings.Join(chunks[1:], "/")
 		test.Link = "https://src.fedoraproject.org/tests/javapackages/blob/main/f/runit"
 	} else {
+		test.Component = ""
+		test.Path = strings.Join(chunks, "/")
+		test.Link = ""
 		log.Printf("Unable to parse test name: %s\n", test.Name)
-		return
 	}
 }
 
